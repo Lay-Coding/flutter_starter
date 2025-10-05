@@ -43,8 +43,8 @@ class _SplashPageState extends ConsumerState<SplashPage> {
         await NetworkManager.get('/appSplashScreenPage/getAppSplashScreenPage');
     if (response.data['code'] == 200) {
       if (response.data['result'] != null) {
-        StorageManager.setString(
-            'key-app-splash-setting', response.data['result'].toString());
+        StorageManager.setObject(
+            'key-app-splash-setting', response.data['result']);
       }
     } else {
       AppUtils.showError(response.data['message']);
@@ -81,10 +81,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
   /// 初始化应用
   Future<void> _initApp() async {
-    String? strConfig = StorageManager.getString('key_splash_to_navtivepage');
-    if (strConfig != null) {
+    Map? objConfig = StorageManager.getObject('key-app-splash-setting');
+    if (objConfig != null) {
       setState(() {
-        _config = jsonDecode(strConfig);
+        _config = objConfig;
       });
     }
   }
@@ -95,6 +95,9 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       if (_config!['jumpMethod'] == '0' &&
           _config?['jumpAddress'] != null &&
           _config!['jumpAddress'].toString().isNotEmpty) {
+        final paramsKeys = Map();
+        paramsKeys['url'] = _config!['jumpAddress'];
+        AppNavigator.go(AppRouter.webview, extra: paramsKeys);
       } else if (_config!['jumpMethod'] == '1') {
       } else if (_config!['jumpMethod'] == '2') {}
     }

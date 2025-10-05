@@ -40,6 +40,9 @@ dependencies:
   # sha1和md5
   crypto: ^3.0.0
 
+  #webview
+  webview_flutter: ^4.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rapid_framework/features/webview/view/webview_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,8 @@ class AppRouter {
   static const String splash = '/';
   static const String login = '/login';
   static const String home = '/home';
-  
+  static const String webview = '/webview';
+
   static final GoRouter router = GoRouter(
     initialLocation: splash,
     routes: [
@@ -27,22 +29,32 @@ class AppRouter {
         name: 'splash',
         builder: (context, state) => const SplashPage(),
       ),
-      
+
       // 登录页
       GoRoute(
         path: login,
         name: 'login',
         builder: (context, state) => const LoginPage(),
       ),
-      
+
       // 主页
       GoRoute(
         path: home,
         name: 'home',
         builder: (context, state) => const HomePage(),
       ),
+
+      //WebView
+      GoRoute(
+        path: webview,
+        name: 'webview',
+        builder: (context, state) {
+          Map map = state.extra as Map;
+          return WebviewPage(url: map['url']);
+        },
+      ),
     ],
-    
+
     // 路由重定向逻辑
     redirect: (context, state) async {
       final isLoggedIn = await StorageManager.isLoggedIn();
@@ -52,20 +64,20 @@ class AppRouter {
       // if (currentPath == splash) {
       //   return isLoggedIn ? home : login;
       // }
-      
+
       // 如果未登录且不在登录页，跳转到登录页
       // if (!isLoggedIn && currentPath != login) {
       //   return login;
       // }
-      
+
       // 如果已登录且在登录页，跳转到主页
       // if (isLoggedIn && currentPath == login) {
       //   return home;
       // }
-      
+
       return null; // 不需要重定向
     },
-    
+
     // 错误页面
     errorBuilder: (context, state) => Scaffold(
       body: Center(
@@ -90,32 +102,32 @@ class AppRouter {
 /// 路由导航工具类
 class AppNavigator {
   static GoRouter get _router => AppRouter.router;
-  
+
   /// 跳转到指定路由
   static void push(String path, {Object? extra}) {
     _router.push(path, extra: extra);
   }
-  
+
   /// 替换当前路由
   static void go(String path, {Object? extra}) {
     _router.go(path, extra: extra);
   }
-  
+
   /// 返回上一页
   static void pop([Object? result]) {
     _router.pop(result);
   }
-  
+
   /// 跳转到登录页
   static void toLogin() {
     _router.go(AppRouter.login);
   }
-  
+
   /// 跳转到主页
   static void toHome() {
     _router.go(AppRouter.home);
   }
-  
+
   /// 退出登录
   static Future<void> logout() async {
     await StorageManager.clearToken();
