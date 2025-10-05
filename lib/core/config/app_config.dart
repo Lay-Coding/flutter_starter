@@ -27,8 +27,8 @@ class AppConfig {
     _instance = AppConfig._(
       environment: kDebugMode ? 'dev' : 'prod',
       baseUrl: kDebugMode 
-        ? 'https://dev-api.roboshineapp.com/'
-        : 'https://api.roboshineapp.com/',
+        ? 'https://api3.xinche365.cn/xinche/'
+        : 'https://api3.xinche365.cn/xinche/',
       enableLog: kDebugMode,
       enableCrashReport: !kDebugMode,
       connectTimeout: 15000,

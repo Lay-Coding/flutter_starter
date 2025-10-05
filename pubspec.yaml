@@ -37,6 +37,9 @@ dependencies:
     sdk: flutter
   intl: any
 
+  # sha1和md5
+  crypto: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
