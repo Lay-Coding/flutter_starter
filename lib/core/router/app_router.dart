@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rapid_framework/features/webview/view/webview_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +6,7 @@ import '../../features/login/view/login_page.dart';
 import '../../features/home/view/home_page.dart';
 import '../../features/splash/view/splash_page.dart';
 import '../storage/storage_manager.dart';
+import 'package:auto_route/auto_route.dart';
 
 /// 路由提供者
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -14,11 +14,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 /// 应用路由管理
-class AppRouter {
+@AutoRouterConfig()
+class AppRouter extends RootStackRouter {
   static const String splash = '/';
   static const String login = '/login';
   static const String home = '/home';
-  static const String webview = '/webview';
+
+  @override
+  List<AutoRoute> get routes => [
+    /// routes go here
+  ];
 
   static final GoRouter router = GoRouter(
     initialLocation: splash,
@@ -42,16 +47,6 @@ class AppRouter {
         path: home,
         name: 'home',
         builder: (context, state) => const HomePage(),
-      ),
-
-      //WebView
-      GoRoute(
-        path: webview,
-        name: 'webview',
-        builder: (context, state) {
-          Map map = state.extra as Map;
-          return WebviewPage(url: map['url']);
-        },
       ),
     ],
 

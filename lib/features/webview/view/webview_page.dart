@@ -5,7 +5,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../../core/storage/storage_manager.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class WebviewPage extends ConsumerStatefulWidget {
   final String url;
 

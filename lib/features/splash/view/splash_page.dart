@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rapid_framework/common/utils/app_utils.dart';
+import 'package:flutter_rapid_framework/core/router/app_router.gr.dart';
+import 'package:flutter_rapid_framework/features/webview/view/webview_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/network/network_manager.dart';
@@ -97,7 +99,8 @@ class _SplashPageState extends ConsumerState<SplashPage> {
           _config!['jumpAddress'].toString().isNotEmpty) {
         final paramsKeys = Map();
         paramsKeys['url'] = _config!['jumpAddress'];
-        AppNavigator.go(AppRouter.webview, extra: paramsKeys);
+        // AppNavigator.go(AppRouter.webview, extra: paramsKeys);
+        // AppNavigator.push(WebviewRoute(url: 'aaaa'));
       } else if (_config!['jumpMethod'] == '1') {
       } else if (_config!['jumpMethod'] == '2') {}
     }
